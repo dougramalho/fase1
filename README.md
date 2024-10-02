@@ -1,8 +1,14 @@
+## Criando um ambiente virtual
+
+```
+python -m venv dev
+```
+
 ## Ativando o ambiente
 
 ```
-.\venv\Scripts\activate  # Windows
-source venv/bin/activate  # Linux/Mac
+.\dev\Scripts\activate  # Windows
+source dev/bin/activate  # Linux/Mac
 ```
 
 ## Instalando as dependências
