@@ -43,6 +43,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+dev/
 
 # pyenv
 .python-version
@@ -69,10 +70,6 @@ storage/
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
-
-# Ignore database files (if using SQLite or others)
-*.db
-*.sqlite3
 
 # Ignore files related to Docker
 *.log

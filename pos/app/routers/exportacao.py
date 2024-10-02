@@ -9,8 +9,8 @@ router = APIRouter(
 )
 
 @router.get("/", response_model=list[schemas.Exportacao])
-def get_exportacao(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    return crud.get_exportacao(db=db, skip=skip, limit=limit)
+def get_exportacoes(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+    return crud.get_exportacoes(db=db, skip=skip, limit=limit)
 
 @router.get("/ano/{ano}", response_model=list[schemas.Exportacao])
 def get_exportacao_por_ano(ano: int, skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):

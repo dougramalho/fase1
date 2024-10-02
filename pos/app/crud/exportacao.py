@@ -8,8 +8,8 @@ def get_exportacoes(db: Session, skip: int = 0, limit: int = 10):
 def get_exportacao_by_ano(db: Session, ano: int, skip: int = 0, limit: int = 10):
     return db.query(Exportacao).filter(Exportacao.ano == ano).offset(skip).limit(limit).all()
 
-def get_exportacao(db: Session, producao_id: int):
-    return db.query(Exportacao).filter(Exportacao.id == producao_id).first()
+def get_exportacao(db: Session, exportacao_id: int):
+    return db.query(Exportacao).filter(Exportacao.id == exportacao_id).first()
 
 def create_exportacao(db: Session, exportacao: ExportacaoCreate):
     db_exportacao = Exportacao(
