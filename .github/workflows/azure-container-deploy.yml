@@ -1,0 +1,40 @@
+name: Build and Deploy to Azure Container Registry and Web App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: 'Checkout GitHub Action'
+      uses: actions/checkout@v3
+
+    # Step 2: Log in to Azure CLI
+    - name: 'Log in to Azure'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # Step 3: Build the Docker image
+    - name: 'Build Docker Image'
+      run: |
+        docker build . -t ${{ secrets.AZURE_ACR_LOGIN_SERVER }}/myapp:${{ github.sha }}
+
+    # Step 4: Push Docker image to ACR
+    - name: 'Push Docker Image to ACR'
+      run: |
+        docker push ${{ secrets.AZURE_ACR_LOGIN_SERVER }}/myapp:${{ github.sha }}
+
+    # Step 5: Update Web App to use the new image
+    - name: 'Deploy to Azure Web App'
+      run: |
+        az webapp config container set \
+          --name ${{ secrets.AZURE_WEBAPP_NAME }} \
+          --resource-group pos \
+          --docker-custom-image-name ${{ secrets.AZURE_ACR_LOGIN_SERVER }}/myapp:${{ github.sha }} \
+          --docker-registry-server-url https://${{ secrets.AZURE_ACR_LOGIN_SERVER }}
