@@ -35,8 +35,3 @@ jobs:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
           slot-name: 'production'
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-
-      # Reinicia o Web App após o deploy
-      - name: Restart the web app
-        run: |
-          az webapp restart --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
