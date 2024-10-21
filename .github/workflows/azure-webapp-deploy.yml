@@ -18,23 +18,31 @@ jobs:
         with:
           python-version: '3.12'
       
-      - name: 'Change directory to ./pos'
+      # Muda o diretório para ./pos
+      - name: Change directory to ./pos
         run: cd ./pos
 
+      # Instala as dependências
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r ./pos/requirements.txt
 
-      - name: 'Deploy to Azure Web App'
+      # Faz o login no Azure usando o perfil de publicação
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+
+      # Realiza o deploy no Azure Web App
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
           slot-name: 'production'
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-        env:
-          AZURE_WEBAPP_PACKAGE_PATH: './pos'
 
-      - name: Start the web app
+      # Reinicia o Web App após o deploy
+      - name: Restart the web app
         run: |
-          az webapp restart --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group your-resource-group
+          az webapp restart --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group <seu-resource-group>
