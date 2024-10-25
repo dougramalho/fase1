@@ -1,20 +1,19 @@
 from pydantic import BaseModel, Field
 
-class CultivoBase(BaseModel):
+class ProducaoBase(BaseModel):
     """
-    Quantidade de uvas processadas no Rio Grande do Sul.
+    Produção de vinhos, sucos e derivados do Rio Grande do Sul.
     """
-    categoria_cultivo: str = Field(..., description="Categoria do cultivo, por exemplo: uva de mesa, uva para vinho.")
-    tipo_processamento: str = Field(..., description="Tipo de processamento, como prensagem ou fermentação.")
-    descricao_cultivo: str = Field(..., description="Descrição detalhada do cultivo e sua aplicação.")
-    quantidade: float = Field(..., description="Quantidade processada em toneladas.")
-    ano: int = Field(..., description="Ano do cultivo e processamento.")
+    categoria_produto: str = Field(..., description="Categoria do produto, por exemplo: vinho, suco de uva.")
+    descricao_produto: str = Field(..., description="Descrição detalhada do produto.")
+    quantidade: float = Field(..., description="Quantidade produzida em litros.")
+    ano: int = Field(..., description="Ano da produção.")
 
-class CultivoCreate(CultivoBase):
+class ProducaoCreate(ProducaoBase):
     pass
 
-class Cultivo(CultivoBase):
-    id: int = Field(..., description="Identificador único do cultivo.")
+class Producao(ProducaoBase):
+    id: int = Field(..., description="Identificador único da produção.")
 
     class Config:
         orm_mode = True
