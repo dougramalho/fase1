@@ -5,7 +5,7 @@ from app.database import get_db
 
 router = APIRouter(
     prefix="/producao",
-    tags=["Produção"]   
+    tags=["Produção"]
 )
 
 @router.get("/", response_model=list[schemas.Producao])
