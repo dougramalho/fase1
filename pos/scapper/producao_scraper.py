@@ -2,7 +2,43 @@ import requests
 from bs4 import BeautifulSoup
 from utils import parse_quantidade, send_to_api
 
+
 def scrape_producao(ano):
+    """
+    Realiza o scraping dos dados de produção de vinhos e derivados para um determinado ano,
+    extraindo e estruturando as informações em uma lista de dicionários.
+
+    Parâmetros:
+    ano (int): O ano para o qual os dados de produção devem ser coletados.
+
+    Retorna:
+    list: Uma lista de dicionários contendo informações sobre a categoria do produto,
+          descrição do produto, quantidade produzida e o ano de produção. Exemplo:
+          [
+              {
+                  "categoria_produto": "Vinhos",
+                  "descricao_produto": "Vinho Tinto",
+                  "quantidade": 15000,
+                  "ano": 2023
+              },
+              ...
+          ]
+
+    Fluxo:
+    - Envia uma solicitação GET para a URL da Embrapa com o ano especificado.
+    - Verifica se a resposta foi bem-sucedida; em caso de erro, imprime uma mensagem e retorna uma lista vazia.
+    - Analisa o conteúdo HTML da resposta para localizar a tabela com dados de produção.
+    - Itera sobre as linhas da tabela:
+        - Se a linha representa uma nova categoria de produto, atualiza a categoria atual.
+        - Se a linha representa um subitem, extrai a descrição do produto e a quantidade, e adiciona aos dados.
+
+    Dependências:
+    - parse_quantidade (function): Função auxiliar para converter texto de quantidade em formato numérico.
+
+    Exceções:
+    - Caso ocorra erro de conexão ou o layout da página seja alterado, a função pode retornar dados incompletos ou vazios.
+    """
+
     url = f'http://vitibrasil.cnpuv.embrapa.br/index.php?ano={ano}&opcao=opt_02'
     response = requests.get(url)
     if response.status_code != 200:
