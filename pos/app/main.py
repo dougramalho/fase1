@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers import producao, processamento, comercializacao, importacao, exportacao
+from app.routers import auth, producao, processamento, comercializacao, importacao, exportacao
 from app.database import engine
 from app.models import producao as producao_model
 from app.models import processamento as processamento_model
@@ -11,6 +11,7 @@ processamento_model.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 # Incluindo os routers
+app.include_router(auth.router)
 app.include_router(producao.router)
 app.include_router(processamento.router)
 app.include_router(comercializacao.router)
