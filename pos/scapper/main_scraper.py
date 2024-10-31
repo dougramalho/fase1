@@ -6,8 +6,37 @@ from importacao_scraper import scrape_importacao
 from exportacao_scraper import scrape_exportacao
 from utils import send_to_api
 
-# Função principal para rodar o scraper baseado na entidade escolhida
 def run_scraper(entidade, ano_inicial, ano_final):
+    """
+    Executa o scraper para a entidade de viticultura especificada, coletando dados de acordo
+    com o intervalo de anos fornecido e enviando-os para uma API.
+
+    Parâmetros:
+    entidade (str): A entidade para qual os dados serão coletados. Opções: 'producao', 'processamento',
+                    'comercializacao', 'importacao', 'exportacao'.
+    ano_inicial (int): O ano inicial para iniciar a coleta de dados.
+    ano_final (int): O ano final para a coleta de dados.
+
+    Fluxo:
+    - Itera sobre o intervalo de anos especificado.
+    - Para cada ano, realiza o scraping dos dados para a entidade escolhida.
+    - Envia os dados coletados para a API usando `send_to_api`.
+    - Se a entidade fornecida não for reconhecida, imprime uma mensagem de erro.
+
+    Dependências:
+    - scrape_producao, scrape_processamento, scrape_comercializacao, scrape_importacao, scrape_exportacao:
+      Funções de scraping para cada entidade.
+    - send_to_api (function): Função para enviar os dados coletados para uma API.
+
+    Exceções:
+    - Não realiza tratamento de exceções explícito; qualquer erro de rede ou scraping será exibido durante a execução.
+
+    Exemplos:
+    >>> run_scraper('producao', 2010, 2015)
+    Scrapando dados para o ano 2010
+    Scrapando dados para o ano 2011
+    ...
+    """
     for ano in range(ano_inicial, ano_final + 1):
         print(f"Scrapando dados para o ano {ano}")
         if entidade == 'producao':

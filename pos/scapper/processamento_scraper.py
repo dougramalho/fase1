@@ -10,9 +10,48 @@ TIPOS_PROCESSAMENTO = {
     "Sem classificação": "subopt_04"
 }
 
+
 def scrape_processamento(ano):
+    """
+    Realiza o scraping dos dados de processamento de uvas para viníferas, americanas e híbridas, uvas de mesa
+    e cultivos sem classificação para um determinado ano, extraindo e estruturando as informações em uma lista de dicionários.
+
+    Parâmetros:
+    ano (int): O ano para o qual os dados de processamento devem ser coletados.
+
+    Retorna:
+    list: Uma lista de dicionários contendo informações sobre a categoria de cultivo, tipo de processamento,
+          descrição do cultivo, quantidade e o ano de processamento. Exemplo:
+          [
+              {
+                  "categoria_cultivo": "Uvas Viníferas",
+                  "tipo_processamento": "Viníferas",
+                  "descricao_cultivo": "Uvas para vinho tinto",
+                  "quantidade": 5000,
+                  "ano": 2023
+              },
+              ...
+          ]
+
+    Fluxo:
+    - Itera sobre os tipos de processamento definidos em `TIPOS_PROCESSAMENTO`, enviando uma requisição para cada subopção correspondente ao tipo.
+    - Verifica se a resposta HTTP foi bem-sucedida. Em caso de erro, imprime uma mensagem de erro e passa para o próximo tipo de processamento.
+    - Analisa o conteúdo HTML da página e procura pela tabela que contém os dados de processamento.
+    - Para cada linha da tabela:
+        - Define a categoria de cultivo principal, caso a linha represente uma categoria.
+        - Extrai a descrição do cultivo e a quantidade se a linha representa um subitem.
+        - Adiciona as informações estruturadas em um dicionário dentro da lista `data`.
+
+    Dependências:
+    - parse_quantidade (function): Função auxiliar para converter textos de quantidade em formato numérico.
+
+    Exceções:
+    - Caso ocorra erro de conexão ou o layout da página seja alterado, a função pode retornar dados incompletos ou vazios.
+    """
+
     base_url = 'http://vitibrasil.cnpuv.embrapa.br/index.php?ano={ano}&subopcao={subopcao}&opcao=opt_03'
     data = []
+
     # Iterar pelos diferentes tipos de processamento
     for tipo_processamento, subopcao in TIPOS_PROCESSAMENTO.items():
         url = base_url.format(ano=ano, subopcao=subopcao)
@@ -51,4 +90,3 @@ def scrape_processamento(ano):
                         "ano": ano
                     })
     return data
-

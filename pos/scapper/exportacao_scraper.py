@@ -10,9 +10,47 @@ TIPOS_EXPORTACAO = {
     "Suco de uva": "subopt_04"
 }
 
+
 def scrape_exportacao(ano):
+    """
+    Realiza o scraping dos dados de exportação de vinhos, espumantes, uvas frescas e suco de uva
+    para um determinado ano, extraindo e estruturando as informações em uma lista de dicionários.
+
+    Parâmetros:
+    ano (int): O ano para o qual os dados de exportação devem ser coletados.
+
+    Retorna:
+    list: Uma lista de dicionários contendo informações sobre a categoria do produto,
+          país de destino, quantidade exportada, valor e o ano de exportação. Exemplo:
+          [
+              {
+                  "categoria": "Vinhos de mesa",
+                  "pais_destino": "Argentina",
+                  "quantidade": 1000,
+                  "valor": 50000,
+                  "ano": 2023
+              },
+              ...
+          ]
+
+    Fluxo:
+    - Itera sobre os tipos de exportação definidos em `TIPOS_EXPORTACAO`, enviando uma requisição para cada subopção correspondente ao tipo.
+    - Verifica se a resposta HTTP foi bem-sucedida. Em caso de erro, imprime uma mensagem de erro e passa para o próximo tipo.
+    - Analisa o conteúdo HTML da página e procura pela tabela que contém os dados de exportação.
+    - Para cada linha da tabela:
+        - Extrai o país de destino, quantidade exportada e valor.
+        - Adiciona as informações estruturadas em um dicionário dentro da lista `data`.
+
+    Dependências:
+    - parse_quantidade (function): Função auxiliar para converter textos de quantidade e valor em formato numérico.
+
+    Exceções:
+    - Caso ocorra erro de conexão ou o layout da página seja alterado, a função pode retornar dados incompletos ou vazios.
+    """
+
     base_url = 'http://vitibrasil.cnpuv.embrapa.br/index.php?ano={ano}&subopcao={subopcao}&opcao=opt_06'
     data = []
+
     # Iterar pelos diferentes tipos de processamento
     for tipo_exportacao, subopcao in TIPOS_EXPORTACAO.items():
         url = base_url.format(ano=ano, subopcao=subopcao)
@@ -47,4 +85,3 @@ def scrape_exportacao(ano):
                     "ano": ano
                 })
     return data
-
