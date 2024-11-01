@@ -38,3 +38,5 @@ http://127.0.0.1:8000/docs
 ## Arquitetura Geral
 
 ![Desenho macro](./pos_fase1.png)
+
+![Módulos](./modulos.png)
