@@ -35,6 +35,14 @@ http://127.0.0.1:8000/docs
 - python main_scraper.py importacao --ano_inicial 1970 --ano_final 2023
 - python main_scraper.py exportacao --ano_inicial 1970 --ano_final 2023
 
+## Acesso
+Link Swagger: https://vitibrasilapi-hmh3gge4gkdgfthj.brazilsouth-01.azurewebsites.net/docs
+Link API: https://vitibrasilapi-hmh3gge4gkdgfthj.brazilsouth-01.azurewebsites.net/
+
+Usuário e senha para autenticação
+Usuário: admin
+Senha: abc123@abc
+
 ## Arquitetura Geral
 
 ![Desenho macro](./pos_fase1.png)
