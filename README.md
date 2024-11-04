@@ -39,9 +39,9 @@ http://127.0.0.1:8000/docs
 Link Swagger: https://vitibrasilapi-hmh3gge4gkdgfthj.brazilsouth-01.azurewebsites.net/docs
 Link API: https://vitibrasilapi-hmh3gge4gkdgfthj.brazilsouth-01.azurewebsites.net/
 
-Usuário e senha para autenticação
-Usuário: admin
-Senha: abc123@abc
+### Usuário e senha para autenticação
+- Usuário: admin
+- Senha: abc123@abc
 
 ## Arquitetura Geral
 
